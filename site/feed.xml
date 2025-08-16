@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<rss version="2.0">
+<channel>
+  <title>Ilyass Rezquellah's website</title>
+  <link>https://www.ilrez.com/</link>
+  <description>Ilyass Rezquellah's website</description>
+  <image>
+      <url>https://www.ilrez.com/images/icon.jpg</url>
+      <title>Ilyass Rezquellah's website</title>
+      <link>https://www.ilrez.com/</link>
+  </image>
+
+<item>
+<title>Halo and more: exploring incremental verification and SNARKs without pairings</title>
+<link>https://www.ilrez.com/general/2021/11/05/crypto.html</link>
+<guid>https://www.ilrez.com/general/2021/11/05/crypto.html</guid>
+<pubDate>Fri, 05 Nov 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Crypto Cities</title>
+<link>https://www.ilrez.com/general/2021/10/31/cities.html</link>
+<guid>https://www.ilrez.com/general/2021/10/31/cities.html</guid>
+<pubDate>Sun, 31 Oct 2021 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Cantor</title>
+<link>https://www.ilrez.com/general/2020/11/25/cantor.html</link>
+<guid>https://www.ilrez.com/general/2020/11/25/cantor.html</guid>
+<pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>Hello world</title>
+<link>https://www.ilrez.com/general/2020/10/24/hello.html</link>
+<guid>https://www.ilrez.com/general/2020/10/24/hello.html</guid>
+<pubDate>Sat, 24 Oct 2020 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+
+<item>
+<title>On Collusion</title>
+<link>https://www.ilrez.com/general/2019/04/03/collusion.html</link>
+<guid>https://www.ilrez.com/general/2019/04/03/collusion.html</guid>
+<pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+<description></description>
+</item>
+
+</channel>
+</rss>
