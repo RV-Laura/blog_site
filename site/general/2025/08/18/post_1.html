@@ -163,7 +163,7 @@ html{
 
 
 <li id="line" class="5"><a href="#personal-experiences">Personal experiences</a><ul><li id="line" class="5"><a href="#recapping">Recapping:</a></li> <li id="line" class="5"><a href="#extension-to-polynomial-evaluations">Extension to polynomial evaluations</a></li></ul></li>
-<li id="line" class="5"><a href="#so-how-do-we-combine-these-proofs">So, how do we combine these proofs?</a></li>
+<li id="line" class="5"><a href="#ai-and-social-media">AI and social media</a></li>
 <li id="line" class="5"><a href="#from-merging-ipas-to-merging-ipa-based-snarks-halo">From merging IPAs to merging IPA-based SNARKs: Halo</a><ul><li id="line" class="5"><a href="#incremental-verification-more-generally">Incremental verification, more generally</a></li></ul></li>
 <li id="line" class="5"><a href="#not-just-polynomials-merging-r1cs-proofs">Not just polynomials! Merging R1CS proofs</a></li>
 <li id="line" class="5"><a href="#recap">Recap</a></li>
@@ -171,49 +171,15 @@ html{
 	</nav>
 
 </div>
-<p><em>Special thanks to Justin Drake and Sean Bowe for wonderfully pedantic and thoughtful feedback and review, and to Pratyush Mishra for discussion that contributed to the original IPA exposition.</em></p>
-<p>Readers who have been <a href="https://vitalik.ca/general/2019/09/22/plonk.html">following</a> the <a href="https://vitalik.ca/general/2017/02/01/zk_snarks.html">ZK-SNARK</a> space <a href="https://vitalik.ca/general/2017/11/09/starks_part_1.html">closely</a> should by now be familiar with the high level of how ZK-SNARKs work. ZK-SNARKs are based on checking equations where the elements going into the equations are mathematical abstractions like <a href="https://vitalik.ca/general/2021/01/26/snarks.html">polynomials</a> (or in <a href="https://vitalik.ca/general/2016/12/10/qap.html">rank-1 constraint systems</a> matrices and vectors) that can hold a lot of data. There are three major families of cryptographic technologies that allow us to represent these abstractions succinctly: Merkle trees (for <a href="https://vitalik.ca/general/2017/11/09/starks_part_1.html">FRI</a>), regular elliptic curves (for <a href="https://twitter.com/VitalikButerin/status/1371844878968176647">inner product arguments (IPAs)</a>), and elliptic curves with pairings and trusted setups (for <a href="https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html">KZG commitments</a>). These three technologies lead to the three types of proofs: FRI leads to STARKs, KZG commitments lead to "regular" SNARKs, and IPA-based schemes lead to bulletproofs. These three technologies have very distinct tradeoffs:</p>
-<p><br></p>
-<table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Technology</th>
-<th>Cryptographic assumptions</th>
-<th>Proof size</th>
-<th>Verification time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FRI</td>
-<td>Hashes only (quantum safe!)</td>
-<td>Large (10-200 kB)</td>
-<td>Medium (poly-logarithmic)</td>
-</tr>
-<tr class="even">
-<td>Inner product arguments (IPAs)</td>
-<td>Basic elliptic curves</td>
-<td>Medium (1-3 kB)</td>
-<td><strong>Very high (linear)</strong></td>
-</tr>
-<tr class="odd">
-<td>KZG commitments</td>
-<td>Elliptic curves + pairings + trusted setup</td>
-<td>Short (~500 bytes)</td>
-<td>Low (constant)</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p>So far, the first and the third have seen the most attention. The reason for this has to do with that pesky right column in the second row of the table: elliptic curve-based inner product arguments have linear verification time. What this means that even though the <em>size</em> of a proof is small, the amount of time needed to verify the proof always takes longer than just running the computation yourself. This makes IPAs non-viable for scalability-related ZK-SNARK use cases: there's no point in using an IPA-based argument to prove the validity of an Ethereum block, because verifying the proof will take longer than just checking the block yourself. KZG and FRI-based proofs, on the other hand, really are much faster to verify than doing the computation yourself, so one of those two seems like the obvious choice.</p>
-<p><strong>More recently, however, there has been a slew of research into techniques for <em>merging</em> multiple IPA proofs into one.</strong> Much of the initial work on this was done as part of designing the <a href="https://eprint.iacr.org/2019/1021.pdf">Halo protocol</a> which is <a href="https://electriccoin.co/blog/halo-arc-for-zcash-proposed-for-release-later-this-year/">going into Zcash</a>. These merging techniques are cheap, and a merged proof takes no longer to verify than a single one of the proofs that it's merging. This opens a way forward for IPAs to be useful: instead of verifying a size-<span class="math inline">\(n\)</span> computation with a proof that takes still takes <span class="math inline">\(O(n)\)</span> time to verify, break that computation up into smaller size-<span class="math inline">\(k\)</span> steps, make <span class="math inline">\(\frac{n}{k}\)</span> proofs for each step, and merge them together so the verifier's work goes down to a little more than <span class="math inline">\(O(k)\)</span>. These techniques also allow us to do <em>incremental verification</em>: if new things keep being introduced that need to be proven, you can just keep taking the existing proof, mixing it in with a proof of the new statement, and getting a proof of the new combined statement out. This is really useful for verifying the integrity of, say, an entire blockchain.</p>
-<p>So how do these techniques work, and what can they do? That's exactly what this post is about.</p>
+<p><em>Special thanks to my husband who had this website template prepared, so I could jump straight into creating.</em></p>
+<p>Hello there. I want to be honest here and say that I didn't know what to write for my first post. So, after a few days pondering on the question, I wanted to just speak from the heart and tackle something less technical: the frustrations that limit an artist's growth.</p>
+
+<p>I am talking about trying to be brave against AI; trying to escape social media's addictive toxicity; trying to rid yourself from the weight of living and make it so it helps you float instead; fighting to take back control over your ability to make your own decisions... because every second counts, and directing your time and effort into what really matters (your family, your friends and yourself) will be the most rewarding feeling you can come across in general. While the body feeds on food and water, the mind does so from thoughts, experiences and feelings. And this is important if any of us want to replace that lack of motivation with the solid driving force to create. Something beyond passion and inspiration.</p>
+
+<p>Commitment.</p>
+
+<p></br></p>
+
 <h2 id="personal-experiences">Personal experiences</h2>
 <p>Inner product arguments are a proof scheme that can work over many mathematical structures, but usually we focus on IPAs over <a href="https://en.wikipedia.org/wiki/Elliptic_curve">elliptic curve points</a>. IPAs can be made over simple elliptic curves, theoretically even Bitcoin and Ethereum's <a href="https://en.bitcoin.it/wiki/Secp256k1">secp256k1</a> (though some special properties are preferred to make <a href="https://vitalik.ca/general/2019/05/12/fft.html">FFTs</a> more efficient); no need for insanely complicated pairing schemes that despite having written an <a href="https://vitalik.ca/general/2017/01/14/exploring_ecp.html">explainer article</a> and an <a href="https://github.com/ethereum/py_ecc/blob/master/py_ecc/bls12_381/bls12_381_pairing.py">implementation</a> I can still barely understand myself.</p>
 <p>We'll start off with the commitment scheme, typically called <strong>Pedersen vector commitments</strong>. To be able to commit to degree <span class="math inline">\(&lt; n\)</span> polynomials, we first publicly choose a set of base points, <span class="math inline">\(G_0 ... G_{n-1}\)</span>. These points can be generated through a pseudo-random procedure that can be re-executed by anyone (eg. the x coordinate of <span class="math inline">\(G_i\)</span> can be <span class="math inline">\(hash(i, j)\)</span> for the lowest integer <span class="math inline">\(j \ge 0\)</span> that produces a valid point); this is <em>not</em> a trusted setup as it does not rely on any specific party to introduce secret information.</p>
@@ -282,7 +248,7 @@ html{
 <p>Hence, if <span class="math inline">\(C\)</span> is a "regular" commitment to <span class="math inline">\(P\)</span> using <span class="math inline">\(\{G_0 ... G_{n-1}\}\)</span> as a base, then to prove that <span class="math inline">\(P(z) = a\)</span> we need only use the same protocol above, but proving that <span class="math inline">\((C, a)\)</span> is a valid commitment using <span class="math inline">\((G_0, 1), (G_1, z) ... (G_{n-1}, z^{n-1})\)</span> as a base!</p>
 <p>Note that in practice, this is usually done slightly differently as an optimization: instead of attaching the numbers to the points and explicitly dealing with structures of the form <span class="math inline">\((G_i, z^i)\)</span>, we add another randomly chosen base point <span class="math inline">\(H\)</span> and express it as <span class="math inline">\(G_i + z^i H\)</span>. This saves space.</p>
 <p><strong>See <a href="https://github.com/ethereum/research/blob/master/bulletproofs/ipa_commitments.py">here</a> for an example implementation of this whole protocol.</strong></p>
-<h2 id="so-how-do-we-combine-these-proofs">So, how do we combine these proofs?</h2>
+<h2 id="ai-and-social-media">AI and social media</h2>
 <p>Suppose that you are given two polynomial evaluation proofs, with different polynomials and different evaluation points, and want to make a proof that they are both correct. You have:</p>
 <ul>
 <li>Proof <span class="math inline">\(\Pi_1\)</span> proving that <span class="math inline">\(P_1(z_1) = y_1\)</span>, where <span class="math inline">\(P_1\)</span> is represented by <span class="math inline">\(com(P_1) = C_1\)</span></li>
