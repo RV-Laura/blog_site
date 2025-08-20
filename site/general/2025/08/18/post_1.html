@@ -164,9 +164,8 @@ html{
 
 <li id="line" class="5"><a href="#personal-experiences">Personal experiences</a></li>
 <li id="line" class="5"><a href="#ai-and-social-media">AI and social media</a></li>
-<li id="line" class="5"><a href="#from-merging-ipas-to-merging-ipa-based-snarks-halo">From merging IPAs to merging IPA-based SNARKs: Halo</a><ul><li id="line" class="5"><a href="#incremental-verification-more-generally">Incremental verification, more generally</a></li></ul></li>
-<li id="line" class="5"><a href="#not-just-polynomials-merging-r1cs-proofs">Not just polynomials! Merging R1CS proofs</a></li>
-<li id="line" class="5"><a href="#recap">Recap</a></li>
+<li id="line" class="5"><a href="#conclusion">Conclusion</a></li>
+<li id="line" class="5"><a href="#summary">Summary</a></li>
 </ul>
 	</nav>
 
@@ -196,95 +195,20 @@ html{
 
 <p>First, let's talk about AI. We are all aware how this tool is able of copying and reproducing styles from different illustrators and musicians; however, this technology is already replacing translators' and programmers' tasks too. If you've watched The Incredibles, you'll remember the scene where the villain Syndrome says, "...when everyone's super... No one will be." Of course, this isn't the meaning Pixar intended to give, but it's an easy and short way to say that AI is to become something normal, deeply integrated in our society, like Google is today. And what will make artists 'super' is our ability to craft evoking scenes with our own two hands. Before, an artist sold paintings, movies, comics... Today, they sell authenticity, care and passion for the love of art.</p>
 
-<p>This technique can easily be generalized to merge <span class="math inline">\(m &gt; 2\)</span> signatures.</p>
-<h2 id="from-merging-ipas-to-merging-ipa-based-snarks-halo">From merging IPAs to merging IPA-based SNARKs: Halo</h2>
+<p>What AI will do (or is currently doing) is simply mass-produce art pieces, lowering costs. Much like clothes: people buy from Primark or Shein, but when they need something of high-quality, they don't go to these shops. And when they value quality, they become loyal to whatever brand they like (which I promise are not the former shops mentioned). So to overcome this frustration, just value your work, your time, your effort and your skill for what is worth. Well, it has helped me after getting sick of hearing AI over the past years. I hope it helps you too.</p>
+
+<p>Then there's social media. I think these platforms, especially YouTube could be really useful to promote your work, share your progress, and learn from professionals and experienced hobbyists. Nevertheless, it is also plagued with brain-rotting addictive content, convenient designs thought out to make the user spend the most time possible in their apps and toxic gamification aimed to make us feel instantly good from a like or a comment. Unfortunately, these apps are not only tools but also money-making products for big coorporations, so it is natural to make it as addictive as possible.</p>
+
+<p>The reason I am saying this is because we waste our time looking at fun facts about seahorses, searching for that perfect and non-repetitive LoFi playlist that will inspire us, studying from our favourite artists on YouTube and their tutorials when sometimes we need to take action and study fundamentals. Much like Duolingo, they give us a sense of progress when one isn't really learning, but just consuming empty words. (Disclaimer here: actually, I've learnt a lot from digital artist like Marco Bucci and SamDoesArt. I'm mainly generalising because, most of the time, internet tutorials assume one masters the fundamentals and skips many steps. We can draw a hand buy constructing it with a triangle and some lines, but the momment a funny pose comes into view that we want to capture, we won't be able to do so because we lack a clear understanding of depth and light or hand anatomy, etc.)</p>
+
+<p>Why is this frustrating? Because I've personally spent years consuming rather than actually getting things done, like a YouTube addict, feeling like I was improving until I sat in front of my sketchbook and was paralised at the idea of drawing a single line. I was striving for perfection because all that I consumed was perfect and no ugly art should be accepted. It is silly when I say it out loud, but it happens. It is really hard to embrace your ugly art when all you see are fully rendered pieces or whatever the case is. However, it is more rewarding to fill an entire page with small doodles and turn the page to see even more doodles than a pretty and generic anime girl (unless that's what you want to draw of course. But remember, the best mangakas have a great grasp on the fundamentals).</p>
+
+
+<h2 id="conclusion">Conclusion</h2>
+
 <p>Now, we get into the core mechanic of the <a href="https://eprint.iacr.org/2019/1021.pdf">Halo protocol</a> being integrated in Zcash, which uses this proof combining technique to create a recursive proof system. The setup is simple: suppose you have a chain, where each block has an associated IPA-based SNARK (see <a href="https://vitalik.ca/general/2021/01/26/snarks.html">here</a> for how generic SNARKs from polynomial commitments work) proving its correctness. You want to create a new block, building on top of the previous tip of the chain. The new block should have its own IPA-based SNARK proving the correctness of the block. In fact, this proof should cover both the correctness of the new block <em>and</em> the correctness of the previous block's proof of the correctness of the entire chain before it.</p>
-<p>IPA-based proofs by themselves cannot do this, because a proof of a statement takes longer to verify than checking the statement itself, so a proof of a proof will take even longer to verify than both proofs separately. But proof merging can do it!</p>
-<center>
-<p><br></p>
-<p><img src="../../../../images/halo/recursion.png" /></p>
-</center>
-<p><br> Essentially, we use the usual "recursive SNARK" technique to verify the proofs, except the "proof of a proof" part is only proving the logarithmic part of the work. We add an extra chain of aggregate proofs, using a trick similar to the proof merging scheme above, to handle the linear part of the work. To verify the whole chain, the verifier need only verify one linear-time proof at the very tip of the chain.</p>
-<p>The precise details are somewhat different from the exact proof-combining trick in the previous section for efficiency reasons. Instead of using the proof-combining trick to combine multiple proofs, we use it on a <em>single</em> proof, just to re-randomize the point that the polynomial committed to by <span class="math inline">\(G^*_0\)</span> needs to be evaluated at. We then use the <em>same</em> newly chosen evaluation point to evaluate the polynomials in the proof of the block's correctness, which allows us to prove the polynomial evaluations together in a single IPA.</p>
-<p>Expressed in math:</p>
-<ul>
-<li>Let <span class="math inline">\(P(z) = a\)</span> be the previous statement that needs to be proven</li>
-<li>The prover generates <span class="math inline">\(G^*_0\)</span></li>
-<li>The prover proves the correctness of the new block plus the logarithmic work in the previous statements by generating a <a href="https://vitalik.ca/general/2019/09/22/plonk.html#putting-it-all-together">PLONK proof</a>: <span class="math inline">\(Q_L * A + Q_R * B + Q_O * C + Q_M * A * B + Q_C = Z * H\)</span></li>
-<li>The prover chooses a random point <span class="math inline">\(t\)</span>, and proves the evaluation of a linear combination of <span class="math inline">\(\{G^*_0,\ Q_L,\ A,\ Q_R,\ B,\ Q_O,\ C,\ Q_M,\ Q_C,\ Z,\ H\}\)</span> at <span class="math inline">\(t\)</span>. We can then check the above equation, replacing each polynomial with its now-verified evaluation at <span class="math inline">\(t\)</span>, to verify the PLONK proof.</li>
-</ul>
-<h3 id="incremental-verification-more-generally">Incremental verification, more generally</h3>
-<p>The size of each "step" does not need to be a full block verification; it could be something as small as a single step of a virtual machine. The smaller the steps the better: it ensures that the linear work that the verifier ultimately has to do at the end is less. The only lower bound is that each step has to be big enough to contain a SNARK verifying the <span class="math inline">\(log(n)\)</span> portion of the work of a step.</p>
-<p>But regardless of the fine details, this mechanism allows us to make succinct and easy-to-verify SNARKs, including easy support for recursive proofs that allow you to extend proofs in real time as the computation extends and even have different provers to do different parts of the proving work, all without pairings or a trusted setup! The main downside is some extra technical complexity, compared with a "simple" polynomial-based proof using eg. KZG-based commitments.</p>
-<p><br></p>
-<table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Technology</th>
-<th>Cryptographic assumptions</th>
-<th>Proof size</th>
-<th>Verification time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FRI</td>
-<td>Hashes only (quantum safe!)</td>
-<td>Large (10-200 kB)</td>
-<td>Medium (poly-logarithmic)</td>
-</tr>
-<tr class="even">
-<td>Inner product arguments (IPAs)</td>
-<td>Basic elliptic curves</td>
-<td>Medium (1-3 kB)</td>
-<td><strong>Very high (linear)</strong></td>
-</tr>
-<tr class="odd">
-<td>KZG commitments</td>
-<td>Elliptic curves + pairings + trusted setup</td>
-<td>Short (~500 bytes)</td>
-<td>Low (constant)</td>
-</tr>
-<tr class="even">
-<td><strong>IPA + Halo-style aggregation</strong></td>
-<td><strong>Basic elliptic curves</strong></td>
-<td><strong>Medium (1-3 kB)</strong></td>
-<td><strong>Medium (constant but higher than KZG)</strong></td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<h2 id="not-just-polynomials-merging-r1cs-proofs">Not just polynomials! Merging R1CS proofs</h2>
-<p>A common alternative to building SNARKs out of polynomial games is building SNARKs out of matrix-vector multiplication games. Polynomials and vectors+matrices are both natural bases for SNARK protocols because they are mathematical abstractions that can store and compute over large amounts of data at the same time, and that admit commitment schemes that allow verifiers to check equations quickly.</p>
-<p>In R1CS (see a more detailed description <a href="https://vitalik.ca/general/2016/12/10/qap.html">here</a>), an instance of the game consists of three matrices <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, and a solution is a vector <span class="math inline">\(Z\)</span> such that <span class="math inline">\((A \cdot Z) \circ (B \cdot Z) = C \cdot Z\)</span> (the problem is often in practice restricted further by requiring the prover to make part of <span class="math inline">\(Z\)</span> public and requiring the last entry of <span class="math inline">\(Z\)</span> to be 1).</p>
-<center>
-<p><br></p>
-<p><img src="../../../../images/halo/r1cs.png" style="width:450px" /></p>
-<p><br></p>
-<p><em>An R1CS instance with a single constraint (so <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> have width 1), with a satisfying <span class="math inline">\(Z\)</span> vector, though notice that here the <span class="math inline">\(Z\)</span> appears on the left and has 1 in the top position instead of the bottom.</em></p>
-</center>
-<p><br></p>
-<p>Just like with polynomial-based SNARKs, this R1CS game can be turned into a proof scheme by creating commitments to <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>, requiring the prover to provide a commitment to (the private portion of) <span class="math inline">\(Z\)</span>, and using fancy proving tricks to prove the equation <span class="math inline">\((A \cdot Z) \circ (B \cdot Z) = C \cdot Z\)</span>, where <span class="math inline">\(\circ\)</span> is item-by-item multiplication, without fully revealing any of these objects. And just like with IPAs, this R1CS game has a proof merging scheme!</p>
-<p>Ioanna Tzialla et al describe such a scheme in a <a href="https://eprint.iacr.org/2021/1263.pdf">recent paper</a> (see page 8-9 for their description). They first modify the game by introducing an expanded equation:</p>
-<p><span class="math display">\[ (A \cdot Z) \circ (B \cdot Z) - u * (C \cdot Z) = E\]</span></p>
-<p>For a "base" instance, <span class="math inline">\(u = 1\)</span> and <span class="math inline">\(E = 0\)</span>, so we get back the original R1CS equation. The extra slack variables are added to make aggregation possible; aggregated instances will have other values of <span class="math inline">\(u\)</span> and <span class="math inline">\(E\)</span>. Now, suppose that you have two solutions to the same instance, though with different <span class="math inline">\(u\)</span> and <span class="math inline">\(E\)</span> variables:</p>
-<p><span class="math display">\[(A \cdot Z_1) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_1) = E_1\]</span></p>
-<p><span class="math display">\[(A \cdot Z_2) \circ (B \cdot Z_2) - u_2 * (C \cdot Z_2) = E_2\]</span></p>
-<p>The trick involves taking a random linear combination <span class="math inline">\(Z_3 = Z_1 + r Z_2\)</span>, and making the equation work with this new value. First, let's evaluate the left side:</p>
-<p><span class="math display">\[ (A \cdot (Z_1 + rZ_2)) \circ (B \cdot (Z_1 + rZ_2)) - (u_1 + ru_2)*(C \cdot (Z_1 + rZ_2)) \]</span></p>
-<p>This expands into the following (grouping the <span class="math inline">\(1\)</span>, <span class="math inline">\(r\)</span> and <span class="math inline">\(r^2\)</span> terms together):</p>
-<p><span class="math display">\[(A \cdot Z_1) \circ (B \cdot Z_1) - u_1 * (C \cdot Z_1)\]</span></p>
-<p><span class="math display">\[r((A \cdot Z_1) \circ BZ_2 + (A \cdot Z_2) \circ BZ_1 - u_1 * (C \cdot Z_2) + u_2 * (C \cdot Z_1))\]</span></p>
-<p><span class="math display">\[r^2((A \cdot Z_2) \circ (B \cdot Z_2) - u_2 * (C \cdot Z_2))\]</span></p>
-<p>The first term is just <span class="math inline">\(E_1\)</span>; the third term is <span class="math inline">\(r^2 * E_2\)</span>. The middle term is very similar to the cross-term (the yellow + green areas) near the very start of this post. The prover simply provides the middle term (without the <span class="math inline">\(r\)</span> factor), and just like in the IPA proof, the randomization forces the prover to be honest.</p>
-<p>Hence, it's possible to make merging schemes for R1CS-based protocols too. Interestingly enough, we don't even technically need to have a "succinct" protocol for proving the <span class="math display">\[ (A \cdot Z) \circ (B \cdot Z) = u * (C \cdot Z) + E\]</span> relation at the end; instead, the prover could just prove by opening all the commitments directly! This would still be "succinct" because the verifier would only need to verify one proof that actually represents an arbitrarily large number of statements. However, in practice having a succinct protocol for this last step is better because it keeps the proofs smaller, and <a href="https://eprint.iacr.org/2021/1263.pdf">Tzialla et al's paper</a> provides such a protocol too (see page 10).</p>
-<h2 id="recap">Recap</h2>
+
+<h2 id="summary">Summary</h2>
 <ul>
 <li>We don't know of a way to make a commitment to a size-<span class="math inline">\(n\)</span> polynomial where evaluations of the polynomial can be verified in <span class="math inline">\(&lt; O(n)\)</span> time directly. The best that we can do is make a <span class="math inline">\(log(n)\)</span> sized proof, where all of the work to verify it is logarithmic <em>except for one final <span class="math inline">\(O(n)\)</span>-time piece</em>.</li>
 <li>But what we <em>can</em> do is merge multiple proofs together. Given <span class="math inline">\(m\)</span> proofs of evaluations of size-<span class="math inline">\(n\)</span> polynomials, you can make a proof that covers <em>all</em> of these evaluations, that takes logarithmic work plus a single size-<span class="math inline">\(n\)</span> polynomial proof to verify.</li>
@@ -293,7 +217,7 @@ html{
 <li>It's not just about polynomials; other games used in SNARKs like R1CS can also be aggregated in similar clever ways.</li>
 <li>No pairings or trusted setups required!</li>
 </ul>
-<p>The march toward faster and more efficient and safer ZK-SNARKs just keeps going...</p>
+<p>Honestly, I hope this has helped you a little to, at the very least, free some pressure for your chest, and hopefully you are light enough to take your first steps towards creating what you love most...</p>
 
  </div>
 
