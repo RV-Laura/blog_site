@@ -203,21 +203,28 @@ html{
 
 <p>Why is this frustrating? Because I've personally spent years consuming rather than actually getting things done, like a YouTube addict, feeling like I was improving until I sat in front of my sketchbook and was paralised at the idea of drawing a single line. I was striving for perfection because all that I consumed was perfect and no ugly art should be accepted. It is silly when I say it out loud, but it happens. It is really hard to embrace your ugly art when all you see are fully rendered pieces or whatever the case is. However, it is more rewarding to fill an entire page with small doodles and turn the page to see even more doodles than a pretty and generic anime girl (unless that's what you want to draw of course. But remember, the best mangakas have a great grasp on the fundamentals).</p>
 
-
 <h2 id="conclusion">Conclusion</h2>
 
-<p>Now, we get into the core mechanic of the <a href="https://eprint.iacr.org/2019/1021.pdf">Halo protocol</a> being integrated in Zcash, which uses this proof combining technique to create a recursive proof system. The setup is simple: suppose you have a chain, where each block has an associated IPA-based SNARK (see <a href="https://vitalik.ca/general/2021/01/26/snarks.html">here</a> for how generic SNARKs from polynomial commitments work) proving its correctness. You want to create a new block, building on top of the previous tip of the chain. The new block should have its own IPA-based SNARK proving the correctness of the block. In fact, this proof should cover both the correctness of the new block <em>and</em> the correctness of the previous block's proof of the correctness of the entire chain before it.</p>
+<p></p>
 
 <h2 id="summary">Summary</h2>
+
 <ul>
-<li>We don't know of a way to make a commitment to a size-<span class="math inline">\(n\)</span> polynomial where evaluations of the polynomial can be verified in <span class="math inline">\(&lt; O(n)\)</span> time directly. The best that we can do is make a <span class="math inline">\(log(n)\)</span> sized proof, where all of the work to verify it is logarithmic <em>except for one final <span class="math inline">\(O(n)\)</span>-time piece</em>.</li>
-<li>But what we <em>can</em> do is merge multiple proofs together. Given <span class="math inline">\(m\)</span> proofs of evaluations of size-<span class="math inline">\(n\)</span> polynomials, you can make a proof that covers <em>all</em> of these evaluations, that takes logarithmic work plus a single size-<span class="math inline">\(n\)</span> polynomial proof to verify.</li>
-<li>With some clever trickery, separating out the logarithmic parts from the linear parts of proof verification, we can leverage this to make recursive SNARKs.</li>
-<li>These recursive SNARKs are actually more efficient than doing recursive SNARKs "directly"! In fact, even in contexts where direct recursive SNARKs are possible (eg. proofs with KZG commitments), Halo-style techniques are typically used instead because they are more efficient.</li>
-<li>It's not just about polynomials; other games used in SNARKs like R1CS can also be aggregated in similar clever ways.</li>
-<li>No pairings or trusted setups required!</li>
+
+<li>AI, like any other tool, is to stay to make art faster and cheaper. Just remember your worth and simply create. People seek authenticity and appreciate your effort and your skill.</li>
+
+<li>Social media can be harmful if you play by their rules. Be mindful of the time you spend there, but do use YouTube and other platforms to complement your studies on fundamentals. It can always be fun!</li>
+
+<li></li>
+
+<li></li>
+
+<li></li>
+
+<li></li>
 </ul>
-<p>Honestly, I hope this has helped you a little to, at the very least, free some pressure for your chest, and hopefully you are light enough to take your first steps towards creating what you love most...</p>
+
+<p>Honestly, I hope this has helped you a little to, at the very least, free some pressure off your chest, and hopefully you feel light enough to take your first steps towards creating what you love most...</p>
 
  </div>
 
